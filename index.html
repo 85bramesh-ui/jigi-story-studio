@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jigi Story Studio</title>
+  <style>
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #10172a, #263b67);
+  color: white;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+textarea, select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  margin: 10px 0;
+  border: 1px solid #9aadd8;
+  border-radius: 12px;
+  font-size: 16px;
+  background: #ffffff;
+  color: #172033;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin: 7px 0;
+  border: none;
+  border-radius: 12px;
+  background: #ffb703;
+  color: #172033;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+button:active {
+  opacity: 0.75;
+}
+
+#result {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #ffffff;
+  color: #172033;
+  padding: 16px;
+  margin-top: 18px;
+  border-radius: 14px;
+  line-height: 1.7;
+}
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #101827;
+      color: #ffffff;
+    }
+    .app {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #1d293b;
+      padding: 22px;
+      border-radius: 18px;
+    }
+    h1 { color: #8be9fd; font-size: 27px; }
+    p { line-height: 1.6; }
+    label { display: block; margin: 16px 0 8px; }
+    textarea, select, button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    textarea, select {
+      border: 1px solid #526179;
+      background: #101827;
+      color: white;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    button {
+      margin-top: 15px;
+      border: 0;
+      background: #7c5cff;
+      color: white;
+      font-weight: bold;
+    }
+    #result {
+      margin-top: 18px;
+      padding: 14px;
+      background: #26364b;
+      border-radius: 10px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .small { color: #c5d0e0; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1>✨ Jigi Story Studio</h1>
+    <p>GVM EXPRESS కోసం నీ తెలుగు కథల ప్రయాణం ఇక్కడ మొదలు!</p>
+
+    <label for="idea">నీ కథ ఐడియా రాయండి</label>
+    <textarea id="idea" placeholder="ఉదా: వర్షంలో చిన్నారిని గణేశుడు రక్షించడం"></textarea>
+
+    <label for="category">కథ రకం ఎంచుకోండి</label>
+    <select id="category">
+      <option value="భక్తి కథ">భక్తి కథ</option>
+      <option value="గ్రామీణ భావోద్వేగ కథ">గ్రామీణ భావోద్వేగ కథ</option>
+      <option value="హాస్య కథ">హాస్య కథ</option>
+      <option value="ప్రేరణాత్మక కథ">ప్రేరణాత్మక కథ</option>
+    </select>
+
+    <button id="generate">నా కథ ప్రాంప్ట్ తయారు చేయి</button><button id="hook">YouTube Hook తయారు చేయి</button><button id="titleBtn">YouTube Title తయారు చేయి</button><button id="tagsBtn">YouTube Hashtags తయారు చేయి</button><button id="scriptBtn">పూర్తి తెలుగు కథ స్క్రిప్ట్ తయారు చేయి</button><button id="sceneBtn">5 సీన్ వీడియో ప్రాంప్ట్‌లు తయారు చేయి</button>
+    <div id="result" aria-live="polite">నీ కథ ఐడియా ఇక్కడ ఫలితంగా కనిపిస్తుంది.</div>
+    <button id="copy" hidden>ఫలితాన్ని కాపీ చేయి</button>
+
+    <p class="small">Jigi Story Studio • GVM EXPRESS</p>
+  </main>
+
+  <script>
+    const idea = document.getElementById('idea');
+    const category = document.getElementById('category');
+    const result = document.getElementById('result');
+    const copyButton = document.getElementById('copy');
+
+    document.getElementById('generate').addEventListener('click', function () {
+      const story = idea.value.trim();
+
+      if (!story) {
+        result.textContent = 'దయచేసి ముందుగా నీ కథ ఐడియా రాయండి.';
+        copyButton.hidden = true;
+        return;
+      }
+
+      result.textContent =
+        'కథ రకం: ' + category.value + '\n\n' +
+        'కథ ఐడియా: ' + story + '\n\n' +
+        'AI కోసం ప్రాంప్ట్:\n' +
+        'ఈ ఐడియా ఆధారంగా సహజమైన తెలుగులో హృదయాన్ని తాకే ' +
+        category.value + ' తయారు చేయండి. ' +
+        'YouTube Shorts కోసం మొదట ఆసక్తికరమైన హుక్, ' +
+        'తర్వాత సన్నివేశాలు, చివర్లో మంచి సందేశం ఇవ్వండి. ' +
+        'కథ ఐడియా: ' + story;
+
+      copyButton.hidden = false;
+    });
+
+document.getElementById('titleBtn').addEventListener('click', function () {
+  const story = idea.value.trim();
+
+  if (!story) {
+    result.textContent = 'ముందుగా నీ కథ ఐడియా రాయండి.';
+    copyButton.hidden = true;
+    return;
+  }
+
+  result.textContent =
+    '🎬 YouTube Title:\n\n' +
+    story + ' | హృదయాన్ని తాకే తెలుగు కథ ❤️';
+
+  copyButton.hidden = false;
+});
+
+document.getElementById('tagsBtn').addEventListener('click', function () {
+  const story = idea.value.trim();
+
+  if (!story) {
+    result.textContent = 'ముందుగా నీ కథ ఐడియా రాయండి.';
+    copyButton.hidden = true;
+    return;
+  }
+
+  const commonTags =
+    '#GVMExpress #TeluguStories #TeluguShorts ' +
+    '#TeluguYouTube #TeluguKatha #Shorts';
+
+  result.textContent =
+    '🏷️ YouTube Hashtags:\n\n' + commonTags;
+
+  copyButton.hidden = false;
+});
+
+document.getElementById('scriptBtn').addEventListener('click', function () {
+  const story = idea.value.trim();
+  const type = category.value;
+
+  if (!story) {
+    result.textContent = 'ముందుగా కథ ఐడియా రాయండి.';
+    copyButton.hidden = true;
+    return;
+  }
+
+  result.textContent =
+    '🎬 GVM EXPRESS — తెలుగు కథ స్క్రిప్ట్\n\n' +
+    'కథ రకం: ' + type + '\n' +
+    'కథ ఐడియా: ' + story + '\n\n' +
+    '🔥 సీన్ 1 — HOOK (0–3 సెకన్లు)\n' +
+    'ప్రేక్షకుల్లో ఆసక్తి కలిగించే ప్రశ్నతో ప్రారంభించండి.\n\n' +
+    '📖 సీన్ 2 — కథ ప్రారంభం\n' +
+    'ప్రధాన పాత్రలు, ప్రదేశం, పరిస్థితిని వివరించండి.\n\n' +
+    '🎭 సీన్ 3 — కీలక సంఘటన\n' +
+    'కథలో సమస్య లేదా ఆశ్చర్యకరమైన సంఘటనను చూపించండి.\n\n' +
+    '❤️ సీన్ 4 — క్లైమాక్స్ మరియు ముగింపు\n' +
+    'భావోద్వేగభరితమైన ముగింపుతో కథను పూర్తి చేయండి.\n\n' +
+    '🎙️ తెలుగు Voice-over:\n' +
+    'పై నాలుగు సన్నివేశాలకు సరిపోయే సహజమైన తెలుగు సంభాషణలు, ' +
+    'వివరణలు రాయండి.\n\n' +
+    '🎞️ Video Prompts:\n' +
+    'ప్రతి సన్నివేశానికి విడివిడిగా 9:16 వీడియో ప్రాంప్ట్ ఇవ్వండి. ' +
+    'పాత్రల రూపం, దుస్తులు, ప్రదేశం ఒకే విధంగా ఉండాలి.\n\n' +
+    '🌟 కథ నీతి:\n' +
+    'కథకు సరిపోయే మంచి సందేశంతో ముగించండి.\n\n' +
+    'గమనిక: ఇది స్క్రిప్ట్ రాయడానికి ఉపయోగపడే టెంప్లేట్. ' +
+    'పూర్తి కథను AIతో రాయించాలంటే ఈ టెక్స్ట్‌ను కాపీ చేసి ' +
+    'ChatGPTలో పంపండి.';
+
+  copyButton.hidden = false;
+});
+
+document.getElementById('sceneBtn').addEventListener('click', function () {
+  const story = idea.value.trim();
+
+  if (!story) {
+    result.textContent = 'ముందుగా కథ ఐడియా రాయండి.';
+    copyButton.hidden = true;
+    return;
+  }
+
+  result.textContent =
+    '🎬 GVM EXPRESS — 9:16 VIDEO PROMPTS\n\n' +
+    'కథ: ' + story + '\n\n' +
+    'సీన్ 1 — OPENING HOOK:\n' +
+    'Vertical 9:16 cinematic animation. ' + story +
+    '. Dramatic opening, expressive characters, camera close-up.\n\n' +
+    'సీన్ 2 — STORY SETUP:\n' +
+    'Show the main character and location. ' + story +
+    '. Establishing shot, natural lighting, detailed background.\n\n' +
+    'సీన్ 3 — PROBLEM:\n' +
+    'Show the main problem through character actions and expressions. ' +
+    'Emotional close-up, cinematic camera movement.\n\n' +
+    'సీన్ 4 — CLIMAX:\n' +
+    'Show the most important turning point of the story. ' +
+    'Dynamic camera movement, dramatic lighting, clear action.\n\n' +
+    'సీన్ 5 — ENDING:\n' +
+    'Show a satisfying emotional ending and a memorable final frame. ' +
+    'Slow camera movement, cinematic composition.\n\n' +
+    'CONTINUITY:\n' +
+    'Keep character faces, clothing, colors and locations consistent ' +
+    'across all five scenes. Vertical 9:16 format. No on-screen text.';
+  
+  copyButton.hidden = false;
+});
+
+    copyButton.addEventListener('click', async function () {
+      try {
+        await navigator.clipboard.writeText(result.textContent);
+        copyButton.textContent = 'కాపీ అయింది ✓';
+      } catch (error) {
+        result.focus?.();
+        alert('ఫలితాన్ని నొక్కి పట్టుకుని Copy ఎంపికను ఉపయోగించండి.');
+      }
+    });
+  </script>
+</body>
+</html>
